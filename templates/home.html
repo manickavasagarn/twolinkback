@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Face Recognition</title>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Counter to track tab switches
+            let tabSwitchCount = 0;
+            let warningCount = 0;
+
+            document.addEventListener('visibilitychange', function() {
+                if (document.hidden) {
+                    // Increment the counter on each tab switch
+                    tabSwitchCount++;
+
+                    // Show a warning for the first 3 tab switches
+                    if (tabSwitchCount <= 3) {
+                        alert(`Warning: Do not switch tabs during the exam. Tab switch count: ${tabSwitchCount}`);
+                    }
+
+                    // Redirect on the fourth tab switch
+                    if (tabSwitchCount === 4) {
+                        // Update the URL to your exam_terminated_screen
+                        window.location.href = 'webcam/exam_terminated/';
+                    }
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    {% if user.is_authenticated %}
+    <h1>Welcome {{user.first_name}}</h1>
+    {% endif %}
+
+    <div>
+        <a href='/accounts/logout'>Logout</a>
+    </div>
+    <img src="{% url 'video_feed' %}" width="640" height="480">
+    <img src="{% url 'video_feed2' %}" width="640" height="480">
+</body>
+</html> 
+
+
